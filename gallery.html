@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Drawing Gallery · Kids Drawing Buddy{% endblock %}
+{% block body %}
+<header class="topbar">
+  <div>
+    <div class="brand">Kids <span>Drawing Buddy</span></div>
+    <div class="tiny">Age {{ user["child_age"] }} · Your drawing book</div>
+  </div>
+  <nav>
+    <a class="chip" href="{{ url_for('age_select') }}">Change age</a>
+    <a class="chip" href="{{ url_for('logout') }}">Logout</a>
+  </nav>
+</header>
+
+<main class="gallery-shell">
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">MY DRAWING BOOK</span>
+      <h1>Pick a picture 🎨</h1>
+      <p class="gallery-note">Your colors are saved automatically. Open any “In progress” drawing to continue.</p>
+    </div>
+    <div class="progress-pill">
+      {{ completed|length }} completed
+    </div>
+  </div>
+
+  <section class="drawing-grid">
+    {% for drawing_id, drawing in drawings.items() %}
+      {% set saved = progress.get(drawing_id, {}) %}
+      {% set has_progress = saved.get("fills") or saved.get("strokes") %}
+      <a class="drawing-card {% if drawing_id in completed %}done{% elif has_progress %}in-progress{% endif %}"
+         href="{{ url_for('draw_page', drawing_id=drawing_id) }}">
+        <div class="drawing-preview saved-preview" data-drawing-id="{{ drawing_id }}">
+          <div class="preview-emoji">{{ drawing["emoji"] }}</div>
+          <div class="outline-hint">{{ drawing["svg"]|safe }}</div>
+        </div>
+        <div class="drawing-meta">
+          <div>
+            <h3>{{ drawing["title"] }}</h3>
+            <p>
+              {% if drawing_id in completed %}
+                Finished drawing
+              {% elif has_progress %}
+                Auto-saved · continue coloring
+              {% else %}
+                Recommended age {{ drawing["min_age"] }}+
+              {% endif %}
+            </p>
+          </div>
+          <span class="status-badge">
+            {% if drawing_id in completed %}
+              ✓ Completed
+            {% elif has_progress %}
+              ↻ In progress
+            {% else %}
+              Start
+            {% endif %}
+          </span>
+        </div>
+      </a>
+    {% endfor %}
+  </section>
+</main>
+
+<script>
+  window.LUMI_GALLERY_PROGRESS = {{ progress|tojson }};
+</script>
+<script>
+(() => {
+  const allProgress = window.LUMI_GALLERY_PROGRESS || {};
+
+  document.querySelectorAll(".saved-preview").forEach(card => {
+    const drawingId = card.dataset.drawingId;
+    const state = allProgress[drawingId] || {};
+    const svg = card.querySelector(".drawing-svg");
+    if (!svg) return;
+
+    const fills = state.fills || {};
+    Object.entries(fills).forEach(([region, color]) => {
+      const node = svg.querySelector(`[data-region="${CSS.escape(region)}"]`);
+      if (node) node.style.fill = color;
+    });
+
+    const strokes = Array.isArray(state.strokes) ? state.strokes : [];
+    if (strokes.length) {
+      const ns = "http://www.w3.org/2000/svg";
+      let layer = svg.querySelector(".preview-brush-layer");
+      if (!layer) {
+        layer = document.createElementNS(ns, "g");
+        layer.setAttribute("class", "preview-brush-layer");
+        svg.appendChild(layer);
+      }
+
+      strokes.forEach(stroke => {
+        if (!stroke || !stroke.d) return;
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("d", stroke.d);
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", stroke.color || "#E53935");
+        path.setAttribute("stroke-width", stroke.width || 16);
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+        path.setAttribute("pointer-events", "none");
+        layer.appendChild(path);
+      });
+    }
+  });
+})();
+</script>
+{% endblock %}

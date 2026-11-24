@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Choose Age · Kids Drawing Buddy{% endblock %}
+{% block body %}
+<main class="center-shell">
+  <section class="wide-card age-card">
+    <span class="eyebrow">STEP 2</span>
+    <h1>How old is the young artist?</h1>
+    <p class="subtext">We use age only to show drawings with the right level of detail.</p>
+
+    <form method="post">
+      <div class="age-grid">
+        {% for age in range(4, 9) %}
+          <label class="age-option">
+            <input type="radio" name="age" value="{{ age }}" {% if current_age == age %}checked{% endif %} required>
+            <span>
+              <strong>{{ age }}</strong>
+              <small>years</small>
+            </span>
+          </label>
+        {% endfor %}
+      </div>
+      <button class="primary-btn big" type="submit">Show My Drawings</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

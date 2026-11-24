@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block title %}
+  {{ drawing["title"] }} · Kids Drawing Buddy
+{% endblock %}
+
+{% block body %}
+
+<div class="draw-app">
+
+  <!-- =========================
+       TOP BAR
+       ========================= -->
+  <header class="draw-topbar">
+
+    <a
+      class="round-btn"
+      href="{{ url_for('gallery') }}"
+      aria-label="Back"
+    >
+      ←
+    </a>
+
+    <div class="draw-title-wrap">
+      <h1>{{ drawing["title"] }}</h1>
+
+      <p id="saveStatus">
+        Ready · your work saves automatically
+      </p>
+    </div>
+
+    <div class="draw-actions">
+
+      <button
+        class="round-btn"
+        id="undoBtn"
+        type="button"
+        title="Undo"
+      >
+        ↶
+      </button>
+
+      <button
+        class="round-btn"
+        id="resetBtn"
+        type="button"
+        title="Reset"
+      >
+        🗑
+      </button>
+
+      <button
+        class="finish-btn"
+        id="finishBtn"
+        type="button"
+      >
+        ✓ Finish
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       DRAWING AREA
+       ========================= -->
+  <main class="canvas-layout enhanced-layout">
+
+
+    <!-- =========================
+         LEFT TOOLBAR
+         ========================= -->
+    <aside
+      class="left-toolbar"
+      aria-label="Drawing tools"
+    >
+
+      <div class="tool-title">
+        Tools
+      </div>
+
+
+      <!-- Fill -->
+      <button
+        type="button"
+        class="tool-btn active"
+        data-tool="fill"
+      >
+        <span class="tool-icon">🪣</span>
+        <span>Fill</span>
+      </button>
+
+
+      <!-- Brush -->
+      <button
+        type="button"
+        class="tool-btn"
+        data-tool="brush"
+      >
+        <span class="tool-icon">🖌️</span>
+        <span>Brush</span>
+      </button>
+
+
+      <!-- Eraser -->
+      <button
+        type="button"
+        class="tool-btn"
+        data-tool="eraser"
+      >
+        <span class="tool-icon">🧽</span>
+        <span>Eraser</span>
+      </button>
+
+
+      <div class="tool-divider"></div>
+
+
+      <!-- =========================
+           BRUSH SIZE
+           ========================= -->
+      <div class="tool-title">
+        Brush size
+      </div>
+
+      <div class="brush-size-list">
+
+        <!-- Small -->
+        <button
+          type="button"
+          class="size-btn"
+          data-size="8"
+          title="Small brush"
+        >
+          <span class="size-dot size-small"></span>
+        </button>
+
+
+        <!-- Medium -->
+        <button
+          type="button"
+          class="size-btn active"
+          data-size="16"
+          title="Medium brush"
+        >
+          <span class="size-dot size-medium"></span>
+        </button>
+
+
+        <!-- Large -->
+        <button
+          type="button"
+          class="size-btn"
+          data-size="28"
+          title="Large brush"
+        >
+          <span class="size-dot size-large"></span>
+        </button>
+
+      </div>
+
+    </aside>
+
+
+    <!-- =========================
+         DRAWING CANVAS
+         ========================= -->
+    <section
+      class="canvas-card paint-canvas-card"
+      id="drawingArea"
+    >
+
+      {{ drawing["svg"]|safe }}
+
+    </section>
+
+
+    <!-- =========================
+         COLOR PANEL
+         ========================= -->
+    <aside class="tool-panel color-panel">
+
+      <div class="tool-title">
+        Colors
+      </div>
+
+
+      <div
+        class="palette"
+        id="palette"
+      >
+
+        {% set colors = [
+          "#E53935",
+          "#FF6B6B",
+          "#FF9B72",
+          "#FF7A00",
+          "#FFB703",
+          "#FFD166",
+          "#FFF176",
+          "#8BC34A",
+          "#2EC4B6",
+          "#31C5B4",
+          "#4D96FF",
+          "#8E6CEF",
+          "#B45FDE",
+          "#7B3F00",
+          "#333333",
+          "#FFFFFF"
+        ] %}
+
+
+        {% for color in colors %}
+
+          <button
+            class="color-dot {% if loop.first %}selected{% endif %}"
+            type="button"
+            data-color="{{ color }}"
+            style="--swatch: {{ color }}"
+            aria-label="Select color {{ color }}"
+          >
+          </button>
+
+        {% endfor %}
+
+      </div>
+
+
+      <!-- =========================
+           AUTO SAVE
+           ========================= -->
+      <div class="autosave-card">
+
+        <div class="autosave-icon">
+          ☁️
+        </div>
+
+        <strong>
+          Auto Save
+        </strong>
+
+        <small>
+          Your colors and brush lines are saved automatically.
+        </small>
+
+      </div>
+
+    </aside>
+
+  </main>
+
+</div>
+
+
+<!-- =========================
+     SUCCESS POPUP
+     ========================= -->
+<div
+  class="success-modal hidden"
+  id="successModal"
+  role="dialog"
+  aria-modal="true"
+>
+
+  <div class="success-card">
+
+    <div class="confetti">
+      🎉 ⭐ 🎨 ⭐ 🎉
+    </div>
+
+    <h2>
+      Great job!
+    </h2>
+
+    <p id="successText">
+      Your drawing is complete and saved.
+    </p>
+
+    <a
+      class="primary-btn modal-btn"
+      href="{{ url_for('gallery') }}"
+    >
+      See Saved Drawing
+    </a>
+
+  </div>
+
+</div>
+
+
+<!-- =====================================================
+     FLASK DATA
+     Keep Jinja JSON outside normal JavaScript.
+     This prevents VS Code JavaScript syntax errors.
+     ===================================================== -->
+
+<script
+  id="drawingData"
+  type="application/json"
+>
+{
+  "drawingId": {{ drawing_id|tojson }},
+  "initialState": {{ initial_state|tojson }}
+}
+</script>
+
+
+<!-- =====================================================
+     READ FLASK DATA USING NORMAL JAVASCRIPT
+     ===================================================== -->
+
+<script>
+  const drawingDataElement =
+    document.getElementById("drawingData");
+
+  const drawingData =
+    JSON.parse(drawingDataElement.textContent);
+
+  window.LUMI_DRAWING_ID =
+    drawingData.drawingId;
+
+  window.LUMI_INITIAL_STATE =
+    drawingData.initialState;
+</script>
+
+
+<!-- =========================
+     DRAWING JAVASCRIPT
+     ========================= -->
+
+<script
+  src="{{ url_for('static', filename='js/draw.js') }}"
+></script>
+
+{% endblock %}

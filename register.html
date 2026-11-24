@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Create Account · Kids Drawing Buddy{% endblock %}
+{% block body %}
+<main class="auth-shell">
+  <section class="mascot-panel">
+    <div class="mascot-card">
+      <img
+      src="{{ url_for('static', filename='images/create.png') }}"
+      alt="Kids Drawing Buddy mascot"
+      class="mascot-image"
+    >
+      <!-- <div class="mascot-emoji">🦎</div>
+      <div class="palette-emoji">🖍️</div> -->
+      <h1>Create a <span>colorful start</span></h1>
+      <p>One parent account, a simple drawing profile.</p>
+    </div>
+  </section>
+
+  <section class="auth-card">
+    <span class="eyebrow">STEP 1</span>
+    <h2>Create User Account</h2>
+    <p class="subtext">Create a simple user account to save drawing progress.</p>
+
+    <form method="post" class="stack-form">
+      <label>
+        Name
+        <input name="username" autocomplete="username" minlength="3" placeholder="User name" required>
+      </label>
+      <label>
+        Password
+        <input type="password" name="password" autocomplete="new-password" minlength="4" placeholder="Create password" required>
+      </label>
+      <button class="primary-btn" type="submit">Continue</button>
+    </form>
+
+    <p class="switch-text">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+  </section>
+</main>
+{% endblock %}
