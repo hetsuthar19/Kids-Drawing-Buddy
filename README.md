@@ -355,7 +355,6 @@ User Registration / Login
 
 <img width="1920" height="1080" alt="Screenshot 2026-11-25 010321" src="https://github.com/user-attachments/assets/6f5e801f-017d-4fbd-90e3-cc60def0a9a5" />
 <img width="1920" height="1080" alt="Screenshot 2026-11-25 010538" src="https://github.com/user-attachments/assets/eed8cacd-e7d2-4012-ad4d-3d11017c185e" />
-<img width="1920" height="1080" alt="Screenshot 2026-11-25 010559" src="https://github.com/user-attachments/assets/58127296-4be7-412b-84b4-fd843f8a1db1" />
 
 
 ---
@@ -363,6 +362,8 @@ User Registration / Login
 ### Completed Drawing
 
 <img width="1920" height="1080" alt="Screenshot 2026-11-25 010547" src="https://github.com/user-attachments/assets/cdb4f446-97d1-41a1-be72-04758e51807d" />
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010559" src="https://github.com/user-attachments/assets/58127296-4be7-412b-84b4-fd843f8a1db1" />
+
 ---
 
 # About the Project
