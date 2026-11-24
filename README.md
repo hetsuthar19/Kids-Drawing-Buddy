@@ -1,4 +1,4 @@
-# 🎨 Kids Drawing Buddy
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010247" src="https://github.com/user-attachments/assets/d3a9c3d5-6545-4477-84e5-d5b8f1659418" /># 🎨 Kids Drawing Buddy
 
 **Kids Drawing Buddy** is a fun, interactive, and child-friendly drawing and coloring web application designed for children aged **4–8 years**.
 
@@ -324,7 +324,45 @@ User Registration / Login
           ↓
  Drawing Marked Completed
 ```
+## 📸 Application Screenshots
 
+### Login Screen
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010247" src="https://github.com/user-attachments/assets/af95e193-3128-461a-b62e-eb1e591ccd36" />
+
+
+---
+
+### Registration Screen
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010812" src="https://github.com/user-attachments/assets/337d06ce-4570-47a1-9bfe-89b1a35a9a34" />
+
+
+---
+
+### Age Selection Screen
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010224" src="https://github.com/user-attachments/assets/b4dbbff3-607c-430d-9d3a-be7dfc27b902" />
+
+
+---
+
+### Drawing Gallery
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010309" src="https://github.com/user-attachments/assets/01f5fe48-d906-412e-901a-8b494256b0bd" />
+
+---
+
+### Drawing & Coloring Screen
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010321" src="https://github.com/user-attachments/assets/6f5e801f-017d-4fbd-90e3-cc60def0a9a5" />
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010538" src="https://github.com/user-attachments/assets/eed8cacd-e7d2-4012-ad4d-3d11017c185e" />
+
+---
+
+### Completed Drawing
+
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010547" src="https://github.com/user-attachments/assets/cdb4f446-97d1-41a1-be72-04758e51807d" />
 ---
 
 # About the Project
