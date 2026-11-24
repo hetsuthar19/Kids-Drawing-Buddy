@@ -1,5 +1,3 @@
-<img width="1920" height="1080" alt="Screenshot 2026-11-25 010247" src="https://github.com/user-attachments/assets/d3a9c3d5-6545-4477-84e5-d5b8f1659418" /># 🎨 Kids Drawing Buddy
-
 **Kids Drawing Buddy** is a fun, interactive, and child-friendly drawing and coloring web application designed for children aged **4–8 years**.
 
 The application allows kids to choose simple black-and-white drawings, add colors using fill and brush tools, erase mistakes, undo changes, and automatically save their drawing progress so they can continue later.
@@ -357,6 +355,8 @@ User Registration / Login
 
 <img width="1920" height="1080" alt="Screenshot 2026-11-25 010321" src="https://github.com/user-attachments/assets/6f5e801f-017d-4fbd-90e3-cc60def0a9a5" />
 <img width="1920" height="1080" alt="Screenshot 2026-11-25 010538" src="https://github.com/user-attachments/assets/eed8cacd-e7d2-4012-ad4d-3d11017c185e" />
+<img width="1920" height="1080" alt="Screenshot 2026-11-25 010559" src="https://github.com/user-attachments/assets/58127296-4be7-412b-84b4-fd843f8a1db1" />
+
 
 ---
 
